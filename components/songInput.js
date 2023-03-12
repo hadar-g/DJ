@@ -28,11 +28,12 @@ const SongInput = (props) => {
 
 const styles = StyleSheet.create({
     input: {
-        flex: 1,
+     //   flex: 1,
         flexDirection: 'row',
         marginTop: '15%',
      //   backgroundColor: 'green',
-        height: 50
+        height: 50,
+        margin: 50
     },
     inputText: {
         borderColor: 'black',
@@ -40,7 +41,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: '70%',
         height: '5%',
-        paddingLeft: 10
+        paddingLeft: 10,
+    //    backgroundColor: 'yellow',
+        height: 35,
+        width: 250
     },
   });
 
