@@ -27,9 +27,19 @@ const List = (props) => {
             setSongsArray(songsArray.slice(1))
             return
         }
+      
         setSongsArray(songsArray => [...songsArray, {title : props.inputValue, votes: 10}])
         console.log(songsArray)
+
+        //setSongsArray(  songsArray.sort((a, b) => (a.votes > b.votes) ? 1 : -1))
     }, [props.inputValue])
+
+    useEffect(() => {
+        console.log("seconds use effect baby ")
+
+        setSongsArray(songsArray => songsArray.sort((a, b) => (a.votes > b.votes) ? -1 : 1))
+
+    }, [onDownvotePressedHandler, onUpvotePressedHandler])
 
 
     return(
