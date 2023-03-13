@@ -10,14 +10,21 @@ const List = (props) => {
 
     const reOrderArrayForUpvotes = (array, indexOf, indexIn, object) => {
 
-        const firstArray = array.slice(0, indexIn)
-        const secondArray = array.slice(indexIn, array.length)
-        const lastArray = firstArray.concat(object).concat(secondArray)
-        const firstNextArray = lastArray.slice(0,indexOf + 1)
-        const secondNextArray = lastArray.slice(indexOf + 2, array.length + 1)
-        const finalLastArray = firstNextArray.concat(secondNextArray)
+        const start = array.slice(0, indexIn)
+        const end = array.slice(indexIn, array.length)
+        const newArrayWithObject = start.concat(object).concat(end)
+        const newStart = newArrayWithObject.slice(0,indexOf + 1)
+        const newEnd = newArrayWithObject.slice(indexOf + 2, array.length + 1)
+        const finalArray = newStart.concat(newEnd)
 
-        return finalLastArray
+        return finalArray
+    }
+    const noReOrderUpvote = (array, index, object) => {
+        const start = array.slice(0, index)
+        const end = array.slice(index + 1, array.length)
+        const finalArray = start.concat(object).concat(end)
+
+        return finalArray
     }
 
     const onUpvotePressedHandler = (index) => {
@@ -32,8 +39,17 @@ const List = (props) => {
             }
             loopValue += 1
         }
-       // console.log(loopValue)
+        if(loopValue == index){
+            setSongsArray(songsArray => noReOrderUpvote(songsArray, index, {title: currentTitle, votes: currentVotes}))
+            console.log("not moving")
+            return false
+        }else{
+            console.log("moving up")
             setSongsArray(songsArray => reOrderArrayForUpvotes(songsArray, index, loopValue, {title: currentTitle, votes: currentVotes}))
+            return true
+        }
+       // console.log(loopValue)
+            
            // songsArray.splice(loopValue, 0, {title: currentTitle, votes: currentVotes})
         
         console.log(loopValue)
@@ -55,17 +71,7 @@ const List = (props) => {
       
         setSongsArray(songsArray => [...songsArray, {title : props.inputValue, votes: 10}])
         console.log(songsArray)
-
-        //setSongsArray(  songsArray.sort((a, b) => (a.votes > b.votes) ? 1 : -1))
     }, [props.inputValue])
-
-    // useEffect(() => {
-    //     console.log("seconds use effect baby ")
-
-    //     setSongsArray(songsArray => songsArray.sort((a, b) => (a.votes > b.votes) ? -1 : 1))
-
-    // }, [onDownvotePressedHandler, onUpvotePressedHandler])
-
 
     return(
         <View style = {styles.listContainer}>

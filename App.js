@@ -9,16 +9,13 @@ export default function App() {
   const[valueFromInput, setValueFromInput] = useState("")
 
   const inputSubmitHandler = (value) => {
-    console.log(valueFromInput)
-    setValueFromInput(value)
-    setSongsList(songsList => [...songsList, {title: value, votes: '5'} ])
-    console.log(songsList)
-    
+  //  console.log(valueFromInput)
+    setValueFromInput(value) 
   }
   return (
     <View style={styles.container}>
       <SongInput onInputSubmit = {inputSubmitHandler}/>
-      <List inputValue={valueFromInput} songsList = {songsList}/>
+      <List inputValue={valueFromInput} />
     </View>
   );
 }

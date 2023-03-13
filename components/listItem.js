@@ -1,11 +1,40 @@
-import { StyleSheet, Text, View, Button, ScrollView, Pressable, Image} from 'react-native';
-import { useState} from 'react';
+import { StyleSheet, Text, View, Button, ScrollView, Pressable, Image, Animated} from 'react-native';
+import { useState, useRef} from 'react';
 
 
 const ListItem = (props) => {
 
+    const fadeAnim = useRef(new Animated.Value(1)).current;
+
+    const fadeOut = () => {
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration:300,
+          useNativeDriver: true, 
+        }).start(() => fadeIn());
+      };
+
+      const fadeIn = () => {
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 500,
+          useNativeDriver: true,
+        }).start();
+      };
+
+    const upvotePressedHandler = () => {
+        const upvotePressedResult = props.upvotePressed()
+        if(upvotePressedResult){
+        //    console.log('upvote pressed moving up')
+        }
+      //  console.log("submit value result is: ", upvotePressedResult)
+    }
+
     return(
-        <View style = {styles.listItem}>
+        <Animated.View style = {[
+            styles.listItem,
+            {opacity: fadeAnim}
+            ]}>
             <Text 
                 style = {styles.titleText}
                 adjustsFontSizeToFit
@@ -14,12 +43,12 @@ const ListItem = (props) => {
             <View style = {styles.buttons}>
                 <Pressable
                     style = {({pressed}) => [pressed ? {...styles.triangle, opacity: 0.4} : styles.triangle]}
-                    onPress = {props.upvotePressed}/>
+                    onPress = {upvotePressedHandler}/>
                 <Pressable 
                      style = {({pressed}) => [pressed ? {...styles.trianglDown, opacity: 0.4} : styles.triangleDown]}
                      onPress = {props.downvotePressed} />
             </View>
-        </View>
+        </Animated.View>
     )
 
 }
