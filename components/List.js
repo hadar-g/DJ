@@ -26,6 +26,28 @@ const List = (props) => {
 
         return finalArray
     }
+    const reOrderArrayForDownvotes = (array, indexForItemToBePlaced, indexOfItemToBeMoved, object) => {
+        const start = array.slice(0, indexForItemToBePlaced + 1)
+        const end = array.slice(indexForItemToBePlaced + 1, array.length)
+        const arrayWith = start.concat(object).concat(end)
+        const newStart = arrayWith.slice(0, indexOfItemToBeMoved)
+        const newEnd = arrayWith.slice(indexOfItemToBeMoved + 1, array.length + 1)
+        const finalArray = newStart.concat(newEnd)
+
+        console.log("start: ", start)
+console.log("end: ", end)
+console.log("array with: " ,arrayWith)
+console.log("new start: ", newStart)
+console.log("new end: ", newEnd)
+console.log("new array: ", finalArray)
+
+        return finalArray
+        
+
+    }
+    const noReOrderDownvote = () => {
+
+    }
 
     const onUpvotePressedHandler = (index) => {
         const currentVotes = songsArray[index].votes + 1
@@ -41,7 +63,7 @@ const List = (props) => {
         }
         if(loopValue == index){
             setSongsArray(songsArray => noReOrderUpvote(songsArray, index, {title: currentTitle, votes: currentVotes}))
-            console.log("not moving")
+            console.log("not moving up")
             return false
         }else{
             console.log("moving up")
@@ -52,13 +74,36 @@ const List = (props) => {
             
            // songsArray.splice(loopValue, 0, {title: currentTitle, votes: currentVotes})
         
-        console.log(loopValue)
+       // console.log(loopValue)
      //   setSongsArray(songsArray => songsArray.slice(0, loopValue).concat({title: currentTitle, votes: currentVotes}).concat(songsArray.slice(loopValue + 1, songsArray.length)))
     }
     const onDownvotePressedHandler = (index) => {
-        if(songsArray[index].votes > 0){
-            setSongsArray(songsArray => songsArray.slice(0, index).concat({title: songsArray[index].title, votes: (songsArray[index].votes - 1)}).concat(songsArray.slice(index + 1, songsArray.length)))
+        console.log("downvote pressed in index", index)
+        const currentVotes = songsArray[index].votes - 1
+        const currentTitle = songsArray[index].title
+        let downNotFound = true
+        let downLoopValue = songsArray.length
+        
+        while(downLoopValue != 0){  
+            downLoopValue -= 1 
+           console.log('loop', downLoopValue)
+           console.log("index w" , index)
+            if( currentVotes < songsArray[downLoopValue].votes){
+                //downNotFound = false
+                break
+            }
         }
+
+        if(downLoopValue == index){
+            setSongsArray(songsArray => noReOrderUpvote(songsArray, index, {title: currentTitle, votes: currentVotes}))
+            console.log("not moving down")
+        }else{
+            console.log("moving down")
+            setSongsArray(songsArray => reOrderArrayForDownvotes(songsArray, downLoopValue, index, {title: currentTitle, votes: currentVotes}))
+        }
+        // if(songsArray[index].votes > 0){
+        //     setSongsArray(songsArray => songsArray.slice(0, index).concat({title: songsArray[index].title, votes: (songsArray[index].votes - 1)}).concat(songsArray.slice(index + 1, songsArray.length)))
+        // }
         
     }
 
