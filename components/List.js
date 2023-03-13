@@ -93,8 +93,10 @@ const styles = StyleSheet.create({
     listContainer: {
        // flex: 1,
      //   backgroundColor: 'blue',
+
         height: '75%',
         width: '95%',
+        
         //marginBottom: 200
     },
 
