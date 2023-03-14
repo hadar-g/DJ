@@ -1,26 +1,94 @@
-import { StyleSheet, Text, View, Button, ScrollView, Pressable, Image, TextInput} from 'react-native';
-import { useState} from 'react';
+import { StyleSheet, Text, View, Button, ScrollView, Pressable, Image, TextInput, FlatList} from 'react-native';
+import { useState, useEffect} from 'react';
+import DropdownItem from './dropdownItem';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 
 
 const SongInput = (props) => {
 
-    const songSubmitHandler = (inputtedValue) => {
-        props.onInputSubmit(inputtedValue.name)
-        setInputValue('')
-    }
-    const items = [{id: 1, name: "one"}, {id: 2, name: "two"},{id: 3, name: "three"},{id: 4, name: "four"},{id: 5, name: "five"},{id: 6, name: "six"},{id: 7, name: "seven"},{id: 8, name: "eight"},{id: 9, name: "nine"},]
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
 
-    const [inputValue, setInputValue] = useState('')
+
+  useEffect(() => {
+    const fetchMusicData = async () => {
+      try {
+        if (searchTerm.length > 0) {
+          const response = await fetch(`https://itunes.apple.com/search?term=${searchTerm}&entity=song&limit=5`);
+          const data = await response.json();
+          //setSearchResults(data.results);
+          const tempArray =[]
+          data.results.map(song => {
+            tempArray.push({name: song.trackName, artist: song.artistName})
+          })
+          console.log(tempArray)
+          setSearchResults(tempArray)
+          setShowDropdown(true);
+        } else {
+          setSearchResults([]);
+          setShowDropdown(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchMusicData();
+  }, [searchTerm]);
+
+  // async function fetchMusicData(searchTerm) {
+  //   try {
+  //     const response = await fetch(`https://itunes.apple.com/search?term=${searchTerm}&entity=song&limit=5`);
+  //     const data = await response.json();
+  //     return data;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+  //  async function textChangeHandler(text){
+  //   const tempArray = []
+  //   const data = await fetchMusicData(text)
+  //   data.results.map(song => {
+  //     tempArray.push(song.artistName)
+  //   })
+  //   console.log(tempArray)
+  //   setSearchResults(tempArray)
+  // }
+
+    const songSubmitHandler = (index) => {
+       props.onInputSubmit(searchResults[index])
+        setSearchTerm('')
+        setSearchResults([]);
+        setShowDropdown(false);
+    }
+    //const items = [{id: 1, name: "one"}, {id: 2, name: "two"},{id: 3, name: "three"},{id: 4, name: "four"},{id: 5, name: "five"},{id: 6, name: "six"},{id: 7, name: "seven"},{id: 8, name: "eight"},{id: 9, name: "nine"},]
+
     return(
         <View style = {styles.input}>
-        {/* <TextInput
-        onChangeText={setInputValue}
+        <TextInput
+        onChangeText={setSearchTerm}
         style={styles.inputText}
-        value={inputValue}
+        value={searchTerm}
         placeholder="Enter Song Name"
-      /> */}
-       <SearchableDropdown
+      />
+
+      {showDropdown && (
+
+        <FlatList
+         style = {styles.dropdown}
+          data={searchResults}
+          renderItem = {({item, index}) => (
+            <DropdownItem 
+              item = {item}
+              onPress = {() => songSubmitHandler(index)}
+              />)}
+        />
+      )}
+     
+  
+       {/* <SearchableDropdown
+            onTextChange = {(text) => {textChangeHandler(text)}}
             onItemSelect={(item) => {
                 songSubmitHandler(item)
             }}
@@ -44,7 +112,7 @@ const SongInput = (props) => {
             itemTextStyle={{ color: '#222' }}
             itemsContainerStyle={{ maxHeight: 500 }}
             items={items}
-            defaultIndex={2}
+            //defaultIndex={2}
             resetValue={false}
             textInputProps={
               {
@@ -57,9 +125,9 @@ const SongInput = (props) => {
                 nestedScrollEnabled: true,
               }
             }
-        />
+        /> */}
 
-        <Button title ="submit" onPress={songSubmitHandler}/>
+        {/* <Button title ="submit" onPress={songSubmitHandler}/> */}
         </View>
 
     )
@@ -70,10 +138,10 @@ const styles = StyleSheet.create({
     input: {
      //   flex: 1,
 
-        flexDirection: 'row',
-        marginTop: '15%',
+        flexDirection: 'columny',
+        marginTop: '40%',
      //   backgroundColor: 'green',
-        height: 50,
+        height: 200,
         margin: 50,
         zIndex: 1
     },
@@ -89,6 +157,11 @@ const styles = StyleSheet.create({
         width: 250,
     
     },
+    dropdown: {
+      height: 200,
+      width: 250,
+    //  backgroundColor: 'red'
+    }
   });
 
 export default SongInput

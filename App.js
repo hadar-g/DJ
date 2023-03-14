@@ -6,7 +6,7 @@ import List from './components/List';
 
 export default function App() {
   const [songsList, setSongsList] = useState([])
-  const[valueFromInput, setValueFromInput] = useState("")
+  const[valueFromInput, setValueFromInput] = useState({})
 
   const inputSubmitHandler = (value) => {
   //  console.log(valueFromInput)

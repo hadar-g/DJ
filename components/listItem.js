@@ -35,10 +35,15 @@ const ListItem = (props) => {
             styles.listItem,
             {opacity: fadeAnim}
             ]}>
+
+            <View style = {styles.texts}>
             <Text 
                 style = {styles.titleText}
                 adjustsFontSizeToFit
                 >{props.songTitle}</Text>
+            <Text>{props.artistName}</Text>
+            </View>
+
             <Text style = {styles.number}> {props.numVotes}</Text>
             <View style = {styles.buttons}>
                 <Pressable
@@ -66,11 +71,10 @@ const styles = StyleSheet.create({
         padding: 10
     },
     titleText: {
-        flex: 10,
+     
         color: 'white',
         fontSize: 18,
-        width: 150,
-        margin: 5
+
    //     backgroundColor: 'yellow'
     },
     triangle: {
@@ -101,6 +105,12 @@ const styles = StyleSheet.create({
       number: { 
         flex: 2,
        // backgroundColor: 'red'
+      },
+      texts: {
+        flex: 10,
+        width: 150,
+        margin: 5
+
       }
 })
 

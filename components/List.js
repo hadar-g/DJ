@@ -42,6 +42,7 @@ const List = (props) => {
     const onUpvotePressedHandler = (index) => {
         const currentVotes = songsArray[index].votes + 1
         const currentTitle = songsArray[index].title
+        const currentArtist = songsArray[index].artist
         let notFound = true
         let loopValue = 0
         while(notFound){   
@@ -52,18 +53,19 @@ const List = (props) => {
             loopValue += 1
         }
         if(loopValue == index){
-            setSongsArray(songsArray => noReOrder(songsArray, index, {title: currentTitle, votes: currentVotes}))
+            setSongsArray(songsArray => noReOrder(songsArray, index, {title: currentTitle, artist: currentArtist, votes: currentVotes}))
             console.log("not moving up")
             return false
         }else{
             console.log("moving up")
-            setSongsArray(songsArray => reOrderArrayForUpvotes(songsArray, index, loopValue, {title: currentTitle, votes: currentVotes}))
+            setSongsArray(songsArray => reOrderArrayForUpvotes(songsArray, index, loopValue, {title: currentTitle, artist: currentArtist, votes: currentVotes}))
             return true
         }
     }
     const onDownvotePressedHandler = (index) => {
         const currentVotes = songsArray[index].votes - 1
         const currentTitle = songsArray[index].title
+        const currentArtist = songsArray[index].artist
         let downLoopValue = songsArray.length
         
         while(downLoopValue != 0){  
@@ -74,11 +76,11 @@ const List = (props) => {
         }
 
         if(downLoopValue == index){
-            setSongsArray(songsArray => noReOrder(songsArray, index, {title: currentTitle, votes: currentVotes}))
+            setSongsArray(songsArray => noReOrder(songsArray, index, {title: currentTitle, artist: currentArtist, votes: currentVotes}))
             console.log("not moving down")
         }else{
             console.log("moving down")
-            setSongsArray(songsArray => reOrderArrayForDownvotes(songsArray, downLoopValue, index, {title: currentTitle, votes: currentVotes}))
+            setSongsArray(songsArray => reOrderArrayForDownvotes(songsArray, downLoopValue, index, {title: currentTitle, artist: currentArtist,  votes: currentVotes}))
         }
         
     }
@@ -90,7 +92,7 @@ const List = (props) => {
             return
         }
       
-        setSongsArray(songsArray => [...songsArray, {title : props.inputValue, votes: 10}])
+        setSongsArray(songsArray => [...songsArray, {title : props.inputValue.name, artist: props.inputValue.artist, votes: 10}])
         console.log(songsArray)
     }, [props.inputValue])
 
@@ -102,6 +104,7 @@ const List = (props) => {
                 // <Text>{item}</Text>
                 <ListItem 
                     songTitle = {item.title} 
+                    artistName = {item.artist}
                     numVotes = {item.votes} 
                     upvotePressed = {() => onUpvotePressedHandler(index)} 
                     downvotePressed = {() => onDownvotePressedHandler(index)}/>
