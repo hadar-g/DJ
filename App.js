@@ -14,8 +14,13 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
-      <SongInput onInputSubmit = {inputSubmitHandler}/>
-      <List inputValue={valueFromInput} />
+      <SongInput 
+        style = {styles.songInput}
+        onInputSubmit = {inputSubmitHandler}/>
+      <List 
+        style = {styles.listContainer}
+        inputValue={valueFromInput}
+        onAddSong = {() => valueFromInput} />
     </View>
   );
 }
@@ -26,12 +31,20 @@ const styles = StyleSheet.create({
     
     alignItems: 'center',
     justifyContent: 'center',
-  //  backgroundColor: 'red',
+   // backgroundColor: 'red',
     flexDirection: 'column'
   },
   text: {
    // fontSize: 100,
    //flex: 2,
    // backgroundColor: 'red'
+  },
+  songInput: {
+    height: 100,
+    backgroundColor: 'green'
+  },
+  listContainer: {
+    backgroundColor: 'blue'
+
   }
 });

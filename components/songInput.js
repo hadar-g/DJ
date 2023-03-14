@@ -22,7 +22,7 @@ const SongInput = (props) => {
           data.results.map(song => {
             tempArray.push({name: song.trackName, artist: song.artistName})
           })
-          console.log(tempArray)
+       //   console.log(tempArray)
           setSearchResults(tempArray)
           setShowDropdown(true);
         } else {
@@ -138,10 +138,10 @@ const styles = StyleSheet.create({
     input: {
      //   flex: 1,
 
-        flexDirection: 'columny',
-        marginTop: '40%',
-     //   backgroundColor: 'green',
-        height: 200,
+        flexDirection: 'column',
+        marginTop: '25%',
+     //  backgroundColor: 'green',
+        height: 300,
         margin: 50,
         zIndex: 1
     },
@@ -152,15 +152,22 @@ const styles = StyleSheet.create({
         width: '70%',
         height: '5%',
         paddingLeft: 10,
-    //    backgroundColor: 'yellow',
+   //     backgroundColor: 'yellow',
         height: 35,
         width: 250,
+        marginLeft: 25
     
     },
     dropdown: {
-      height: 200,
-      width: 250,
-    //  backgroundColor: 'red'
+      height: '100%',
+      width: 300,
+      marginRight: 25,
+      backgroundColor: 'white',
+      borderColor: 'black',
+      borderBottomRadius: 20,
+      borderBottomLeftRadius: 20,
+      borderBottomRightRadius: 20,
+      borderWidth: 1
     }
   });
 

@@ -8,6 +8,8 @@ const List = (props) => {
     const [isFirstRun, setIsFirstRun] = useState(true)
     const[songsArray, setSongsArray] = useState([props.inputValue])
 
+    const DEFAULT_VOTES_AMOUNT = 10
+
     const reOrderArrayForUpvotes = (array, indexOfItemToBeMoved, indexForItemToBePlaced, object) => {
 
         const start = array.slice(0, indexForItemToBePlaced,)
@@ -54,10 +56,10 @@ const List = (props) => {
         }
         if(loopValue == index){
             setSongsArray(songsArray => noReOrder(songsArray, index, {title: currentTitle, artist: currentArtist, votes: currentVotes}))
-            console.log("not moving up")
+       //     console.log("not moving up")
             return false
         }else{
-            console.log("moving up")
+           // console.log("moving up")
             setSongsArray(songsArray => reOrderArrayForUpvotes(songsArray, index, loopValue, {title: currentTitle, artist: currentArtist, votes: currentVotes}))
             return true
         }
@@ -77,12 +79,16 @@ const List = (props) => {
 
         if(downLoopValue == index){
             setSongsArray(songsArray => noReOrder(songsArray, index, {title: currentTitle, artist: currentArtist, votes: currentVotes}))
-            console.log("not moving down")
+          //  console.log("not moving down")
         }else{
-            console.log("moving down")
+          //  console.log("moving down")
             setSongsArray(songsArray => reOrderArrayForDownvotes(songsArray, downLoopValue, index, {title: currentTitle, artist: currentArtist,  votes: currentVotes}))
         }
         
+    }
+
+    props.onAddSong = (song) => {
+        console.log("recieved a ssong")
     }
 
     useEffect(() => {
@@ -91,9 +97,27 @@ const List = (props) => {
             setSongsArray(songsArray.slice(1))
             return
         }
-      
-        setSongsArray(songsArray => [...songsArray, {title : props.inputValue.name, artist: props.inputValue.artist, votes: 10}])
-        console.log(songsArray)
+
+        // if(songsArray.length > 1){
+            let loopVal = 0
+
+            while(loopVal != songsArray.length){
+                console.log("while loop: ", loopVal)
+                console.log(songsArray[loopVal].votes)
+                if(songsArray[loopVal].votes < DEFAULT_VOTES_AMOUNT){
+                    break
+                }
+                    loopVal += 1
+                
+            }
+            const start = songsArray.slice(0, loopVal)
+            const end = songsArray.slice(loopVal, songsArray.length)
+            setSongsArray(start.concat({title : props.inputValue.name, artist: props.inputValue.artist, votes: DEFAULT_VOTES_AMOUNT}).concat(end))
+        // }else{
+        //     setSongsArray(songsArray => [...songsArray, {title : props.inputValue.name, artist: props.inputValue.artist, votes: DEFAULT_VOTES_AMOUNT}])
+        // }
+       
+     //   console.log(songsArray)
     }, [props.inputValue])
 
     return(
@@ -116,8 +140,8 @@ const List = (props) => {
 const styles = StyleSheet.create({
     listContainer: {
        // flex: 1,
-     //   backgroundColor: 'blue',
-
+      //  backgroundColor: 'blue',
+        marginTop: -200,
         height: '75%',
         width: '95%',
         
