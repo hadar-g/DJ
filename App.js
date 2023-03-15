@@ -18,9 +18,10 @@ export default function App() {
         style = {styles.songInput}
         onInputSubmit = {inputSubmitHandler}/>
       <List 
-        style = {styles.listContainer}
+    //    style = {styles.listContainer}
         inputValue={valueFromInput}
-        onAddSong = {() => valueFromInput} />
+       // onAddSong = {() => valueFromInput}
+        />
     </View>
   );
 }

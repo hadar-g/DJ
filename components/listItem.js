@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, ScrollView, Pressable, Image, Animated} from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView, Pressable, Image, Animated, TouchableOpacity} from 'react-native';
 import { useState, useRef} from 'react';
 
 
@@ -24,6 +24,7 @@ const ListItem = (props) => {
 
     const upvotePressedHandler = () => {
         const upvotePressedResult = props.upvotePressed()
+        console.log('upvote pressed moving up')
         if(upvotePressedResult){
         //    console.log('upvote pressed moving up')
         }
@@ -48,9 +49,10 @@ const ListItem = (props) => {
             <View style = {styles.buttons}>
                 <Pressable
                     style = {({pressed}) => [pressed ? {...styles.triangle, opacity: 0.4} : styles.triangle]}
-                    onPress = {upvotePressedHandler}/>
+                    onPress = {props.upvotePressed}
+                  />
                 <Pressable 
-                     style = {({pressed}) => [pressed ? {...styles.trianglDown, opacity: 0.4} : styles.triangleDown]}
+                     style = {({pressed}) => [pressed ? {...styles.triangleDown, opacity: 0.4} : styles.triangleDown]}
                      onPress = {props.downvotePressed} />
             </View>
         </Animated.View>
@@ -78,18 +80,17 @@ const styles = StyleSheet.create({
    //     backgroundColor: 'yellow'
     },
     triangle: {
-   //     backgroundColor: "transparent",
+     //  backgroundColor: "green",
     //    borderStyle: "solid",
-        borderLeftWidth: 12,
-        borderRightWidth: 12,
-        borderBottomWidth: 25,
-        borderLeftColor: "transparent",
-        borderRightColor: "transparent",
-        borderBottomColor: "#5A5A5A",
+    borderLeftWidth: 12,
+    borderRightWidth: 12,
+    borderBottomWidth: 25,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#5A5A5A",
+    //  borderColor:'black'
       },
       triangleDown: {
-   //     backgroundColor: "transparent",
-     //   borderStyle: "solid",
         borderLeftWidth: 12,
         borderRightWidth: 12,
         borderTopWidth: 25,
@@ -98,18 +99,20 @@ const styles = StyleSheet.create({
         borderTopColor: "#5A5A5A",
       },
       buttons: {
-        flex: 2,
-       // backgroundColor: 'green',
-        flexDirection: 'row'
+        flex: 3,
+   //     backgroundColor: 'black',
+        flexDirection: 'row',
+        marginLeft: 10,
       },
       number: { 
-        flex: 2,
-       // backgroundColor: 'red'
+       flex: 2,
+       // backgroundColor: 'blue'
       },
       texts: {
         flex: 10,
         width: 150,
-        margin: 5
+        margin: 5,
+   //     backgroundColor: 'yellow'
 
       }
 })

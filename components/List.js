@@ -97,13 +97,12 @@ const List = (props) => {
             setSongsArray(songsArray.slice(1))
             return
         }
-
         // if(songsArray.length > 1){
             let loopVal = 0
 
             while(loopVal != songsArray.length){
-                console.log("while loop: ", loopVal)
-                console.log(songsArray[loopVal].votes)
+              //  console.log("while loop: ", loopVal)
+              //  console.log(songsArray[loopVal].votes)
                 if(songsArray[loopVal].votes < DEFAULT_VOTES_AMOUNT){
                     break
                 }
@@ -114,7 +113,7 @@ const List = (props) => {
             const end = songsArray.slice(loopVal, songsArray.length)
             setSongsArray(start.concat({title : props.inputValue.name, artist: props.inputValue.artist, votes: DEFAULT_VOTES_AMOUNT}).concat(end))
         // }else{
-        //     setSongsArray(songsArray => [...songsArray, {title : props.inputValue.name, artist: props.inputValue.artist, votes: DEFAULT_VOTES_AMOUNT}])
+       //      setSongsArray(songsArray => [...songsArray, {title : props.inputValue.name, artist: props.inputValue.artist, votes: DEFAULT_VOTES_AMOUNT}])
         // }
        
      //   console.log(songsArray)

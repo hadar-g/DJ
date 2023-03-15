@@ -65,7 +65,7 @@ const SongInput = (props) => {
     //const items = [{id: 1, name: "one"}, {id: 2, name: "two"},{id: 3, name: "three"},{id: 4, name: "four"},{id: 5, name: "five"},{id: 6, name: "six"},{id: 7, name: "seven"},{id: 8, name: "eight"},{id: 9, name: "nine"},]
 
     return(
-        <View style = {styles.input}>
+        <View style = {showDropdown ? {...styles.input, zIndex: 1} : styles.input }>
         <TextInput
         onChangeText={setSearchTerm}
         style={styles.inputText}
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
      //  backgroundColor: 'green',
         height: 300,
         margin: 50,
-        zIndex: 1
+    //    zIndex: 1
     },
     inputText: {
         borderColor: 'black',
